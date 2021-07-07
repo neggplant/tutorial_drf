@@ -10,5 +10,6 @@ router.register(r'groups', views.GroupViewSet)
 # 另外，我们还包括支持浏览器浏览API的登录URL。
 urlpatterns = [
     url(r'^', include(router.urls)),
+    url(r'^', include('snippets.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
