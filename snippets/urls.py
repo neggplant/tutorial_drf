@@ -5,6 +5,8 @@ from snippets import views
 urlpatterns = [
     url(r'^snippets/$', views.SnippetList.as_view()),
     url(r'^snippets/(?P<pk>[0-9]+)/$', views.SnippetDetail.as_view()),
+    url(r'^users/$', views.UserList.as_view()),
+    url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
 ]
 
 # 实现.json可以访问，需要在视图函数参数中添加format=None。
