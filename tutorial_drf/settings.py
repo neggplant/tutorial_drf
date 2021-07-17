@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', "tutorial"),
         'USER': os.getenv('DB_USER', "mysqluser"),
         'PASSWORD': os.getenv('DB_PASS', "mysqluser"),
-        'HOST': os.getenv('DB_HOST', "192.168.33.187"),
+        'HOST': os.getenv('DB_HOST', "192.168.33.227"),
         'PORT': int(os.getenv('DB_PORT', 3306)),
     },
 }
@@ -133,4 +133,67 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
+}
+
+LOG_PATH = os.path.join(BASE_DIR, 'log', os.curdir)
+
+LOG_FILE_NAME = os.getenv("LOG_FILE_NAME", 'tutorial_drf')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s.%(msecs)d [%(levelname)s] [%(name)s] [%(filename)s:%(lineno)s] [%(funcName)s] '
+                      '%(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+    'standard2': {
+            'format': '%(asctime)s [%(levelname)s] [%(name)s] [%(filename)s:%(lineno)s] [%(funcName)s] '
+                      '%(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG' if DEBUG else 'INFO',
+            # 'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'default': {
+            'level': 'DEBUG' if DEBUG else 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_PATH, '{}.log'.format(LOG_FILE_NAME)),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 5,
+            'formatter': 'standard2'
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'logger1': {
+            'handlers': ['default', 'console'],
+            'level': 'INFO',
+            'propagate': False
+        },
+        'logger2': {
+            'handlers': ['default', 'console'],
+            'level': 'WARNING',
+            'propagate': False
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False
+        },
+    }
 }
