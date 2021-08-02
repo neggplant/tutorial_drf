@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'quickstart.apps.QuickstartConfig',
     'rest_framework',
     'snippets.apps.SnippetsConfig',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -156,7 +157,7 @@ LOGGING = {
                       '%(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%S'
         },
-    'standard2': {
+        'standard2': {
             'format': '%(asctime)s [%(levelname)s] [%(name)s] [%(filename)s:%(lineno)s] [%(funcName)s] '
                       '%(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%S'
