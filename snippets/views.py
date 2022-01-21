@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 from snippets.models import Snippet
 from snippets.permissions import IsOwnerOrReadOnly
 from snippets.serializers import SnippetSerializer, UserSerializer
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, mixins
 
 
-class SnippetList(generics.ListCreateAPIView):
+class SnippetList(generics.ListCreateAPIView, mixins.CreateModelMixin):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
 
@@ -22,7 +22,7 @@ class SnippetList(generics.ListCreateAPIView):
         for the currently authenticated user.
         """
         user = self.request.user
-        return Snippet.objects.filter(owner=user)
+        return Snippet.objects.filter(owner=user.id)
 
 
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):

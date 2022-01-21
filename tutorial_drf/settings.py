@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'tutorial_drf.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', "tutorial"),
-        'USER': os.getenv('DB_USER', "mysqluser"),
-        'PASSWORD': os.getenv('DB_PASS', "mysqluser"),
-        'HOST': os.getenv('DB_HOST', "192.168.1.28"),
+        'NAME': os.getenv('DB_NAME', "tutorial_drf1"),
+        'USER': os.getenv('DB_USER', "myuser"),
+        'PASSWORD': os.getenv('DB_PASS', "myuser"),
+        'HOST': os.getenv('DB_HOST', "192.168.126.128"),
         'PORT': int(os.getenv('DB_PORT', 3306)),
     },
 }
@@ -133,7 +133,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
@@ -182,16 +182,16 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': ['console'],
-            'level': 'INFO',
+            'level': 'DEBUG',
+        },
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False
         },
         'logger1': {
             'handlers': ['default', 'console'],
             'level': 'INFO',
-            'propagate': False
-        },
-        'logger2': {
-            'handlers': ['default', 'console'],
-            'level': 'WARNING',
             'propagate': False
         },
         'django': {

@@ -1,6 +1,7 @@
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db import models
+from django.forms import DecimalField
 from pygments.lexers import get_all_lexers
 from pygments.styles import get_all_styles
 
@@ -23,6 +24,7 @@ class Snippet(models.Model):
     style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
     owner = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.CASCADE)
     highlighted = models.TextField()
+    score = models.DecimalField(help_text='得分', max_digits=5, decimal_places=1, default=0)
 
     class Meta:
         ordering = ('created',)
